@@ -8,17 +8,20 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import User from './components/User/User'
 import Admin from './components/Admin/Admin'
+import HomePage from './components/Home/HomePage'
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>
     <React.StrictMode>
       <BrowserRouter>
-      <Routes>
-        <Route element={<App />} path='/' />
-        <Route element={<User />} path='/users' />
-        <Route element={<Admin />} path='/admins' />
-      </Routes>
+        <Routes>
+          <Route element={<App />} path='/'>
+            <Route element={<HomePage />} index />
+            <Route element={<User />} path='/users' />
+            <Route element={<Admin />} path='/admins' />
+          </Route>
+        </Routes>
       </BrowserRouter>
     </React.StrictMode>
   </Provider>
