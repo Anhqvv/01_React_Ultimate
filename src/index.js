@@ -19,8 +19,8 @@ root.render(
           <Route element={<App />} path='/'>
             <Route element={<HomePage />} index />
             <Route element={<User />} path='/users' />
-            <Route element={<Admin />} path='/admins' />
           </Route>
+            <Route element={<Admin />} path='/admins' />
         </Routes>
       </BrowserRouter>
     </React.StrictMode>
