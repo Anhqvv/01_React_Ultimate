@@ -8,11 +8,52 @@ body {
 }
 
 .app-container {
-  .navbar-nav {
-    .nav-link {
-      &.active {
-        color: dodgerblue;
+  .header-container {
+    margin-top: 20px;
+    .navbar-nav {
+      z-index: 1;
+      background-color: rgba(0, 0, 0, 0);
+      .nav-link {
+        &.active {
+          color: dodgerblue;
+        }
+      }
+    }
+    .btn-login {
+      border: 1px solid #333;
+      margin-right: 15px;
+    }
+    @media (min-width: 1400px) {
+      .container,
+      .container-lg,
+      .container-md,
+      .container-sm,
+      .container-xl,
+      .container-xxl {
+        max-width: 1450px;
       }
     }
   }
+
+  .homepage-content {
+    position: relative;
+    top: 100px;
+    left: 200px;
+    .title {
+      max-width: 544px;
+      font-size: 64px;
+      font-weight: 300;
+    }
+    .desc {
+      max-width: 484px;
+      font-size: 24px;
+      margin-top: 24px;
+      margin-bottom: 40px;
+    }
+  }
+}
+video {
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
 }

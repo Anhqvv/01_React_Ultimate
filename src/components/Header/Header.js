@@ -8,12 +8,11 @@ const Header = () => {
   return (
     <Navbar bg='light' expand='lg'>
       <Container>
-        <NavLink className='navbar-brand' to='/'>
-          React-Boostrap-App
-        </NavLink>
-        <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='me-auto'>
+            <NavLink className='navbar-brand' to='/'>
+              React-Boostrap-App
+            </NavLink>
             <NavLink className='nav-link ' to='/'>
               Home
             </NavLink>
@@ -25,11 +24,13 @@ const Header = () => {
             </NavLink>
           </Nav>
           <Nav>
-            <NavDropdown title='Settings' id='basic-nav-dropdown'>
+            <button className='btn btn-login'>Log In</button>
+            <button className='btn btn-secondary'>Log Out</button>
+            {/* <NavDropdown title='Settings' id='basic-nav-dropdown'>
               <NavDropdown.Item>Log in</NavDropdown.Item>
               <NavDropdown.Item>Log out</NavDropdown.Item>
               <NavDropdown.Item>Profile</NavDropdown.Item>
-            </NavDropdown>
+            </NavDropdown> */}
           </Nav>
         </Navbar.Collapse>
       </Container>
