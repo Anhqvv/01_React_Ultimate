@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { FcPlus } from 'react-icons/fc'
+import { toast } from 'react-toastify'
 
 const ModalCreateUser = props => {
   const { show, setShow } = props
@@ -29,31 +30,48 @@ const ModalCreateUser = props => {
     setPreviewImage(linkImage)
     setImage(event.target.files[0])
   }
-
+  //
+  const validateEmail = email => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+  }
   const handleSaveUser = async () => {
-    // let data = {
-    //   email: email,
-    //   password: password,
-    //   username: username,
-    //   role: role,
-    //   image: image
-    // }
+    //validate
+    const isValidateEmail = validateEmail(email)
+    if (!isValidateEmail) {
+      toast.error('Invalid email')
+      return
+    }
+    if (!password) {
+      toast.error('Inavalid password')
+      return
+    }
+
     const formData = new FormData()
     formData.append('email', email)
     formData.append('password', password)
     formData.append('username', username)
     formData.append('role', role)
     formData.append('userImage', image)
-    let res = await axios.post('http://localhost:8081/api/v1/participant', formData)
-    console.log('data from POST:', res)
+    let res = await axios.post(
+      'http://localhost:8081/api/v1/participant',
+      formData
+    )
+    console.log('data from POST:', res.data)
+    if (res.data && res.data.EC === 0) {
+      toast.success(res.data.EM)
+      handleClose()
+    }
+    if (res.data && res.data.EC !== 0) {
+      toast.error(res.data.EM)
+    }
   }
 
   return (
     <>
-      {/* <Button variant='primary' onClick={handleShow}>
-        Launch static backdrop modal
-      </Button> */}
-
       <Modal
         show={show}
         onHide={handleClose}
