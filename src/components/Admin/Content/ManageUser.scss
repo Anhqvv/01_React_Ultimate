@@ -24,3 +24,16 @@
     }
   }
 }
+.manage-user-container {
+  .title {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 15px 0;
+  }
+  .btn-add-new {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 15px 0;
+  }
+}

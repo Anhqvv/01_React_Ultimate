@@ -15,7 +15,7 @@ import ManageUser from './components/Admin/Content/ManageUser'
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
   <Provider store={store}>
-    <React.StrictMode>
+
       <BrowserRouter>
         <Routes>
           <Route element={<App />} path='/'>
@@ -28,7 +28,7 @@ root.render(
             </Route>
         </Routes>
       </BrowserRouter>
-    </React.StrictMode>
+
   </Provider>
 )
 

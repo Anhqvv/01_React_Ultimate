@@ -1,20 +1,28 @@
+import axios from 'axios'
 import React, { useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 import { FcPlus } from 'react-icons/fc'
 
-const ModalCreateUser = () => {
-  const [show, setShow] = useState(false)
+const ModalCreateUser = props => {
+  const { show, setShow } = props
 
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const handleClose = () => {
+    setShow(false)
+    setEmail('')
+    setPassword('')
+    setUsername('')
+    setRole('')
+    setImage('')
+    setPreviewImage('')
+  }
 
-  const [email, setEmail] = useState()
-  const [password, setPassword] = useState()
-  const [username, setUsername] = useState()
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState('')
   const [role, setRole] = useState('USER')
-  const [previewImage, setPreviewImage] = useState()
-  const [image, setImage] = useState()
+  const [previewImage, setPreviewImage] = useState('')
+  const [image, setImage] = useState('')
 
   const handlePreviewImage = event => {
     const linkImage = URL.createObjectURL(event.target.files[0])
@@ -22,11 +30,29 @@ const ModalCreateUser = () => {
     setImage(event.target.files[0])
   }
 
+  const handleSaveUser = async () => {
+    // let data = {
+    //   email: email,
+    //   password: password,
+    //   username: username,
+    //   role: role,
+    //   image: image
+    // }
+    const formData = new FormData()
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('username', username)
+    formData.append('role', role)
+    formData.append('userImage', image)
+    let res = await axios.post('http://localhost:8081/api/v1/participant', formData)
+    console.log('data from POST:', res)
+  }
+
   return (
     <>
-      <Button variant='primary' onClick={handleShow}>
+      {/* <Button variant='primary' onClick={handleShow}>
         Launch static backdrop modal
-      </Button>
+      </Button> */}
 
       <Modal
         show={show}
@@ -93,7 +119,7 @@ const ModalCreateUser = () => {
             </div>
             <div className='col-12 image-preview'>
               {previewImage ? (
-                <img src={previewImage} />
+                <img src={previewImage} alt='' />
               ) : (
                 <span>Preview Image</span>
               )}
@@ -104,7 +130,9 @@ const ModalCreateUser = () => {
           <Button variant='secondary' onClick={handleClose}>
             Close
           </Button>
-          <Button variant='primary'>Understood</Button>
+          <Button variant='primary' onClick={() => handleSaveUser()}>
+            Save
+          </Button>
         </Modal.Footer>
       </Modal>
     </>
