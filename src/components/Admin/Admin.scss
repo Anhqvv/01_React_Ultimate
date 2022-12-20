@@ -1,11 +1,13 @@
 .admin-container {
   display: flex;
   .admin-sidebar {
+    width: fit-content;
     .pro-sidebar {
       height: 100vh !important;
     }
   }
-}
-.admin-content {
+  .admin-content {
     padding: 20px;
+    width: 100%;
+  }
 }

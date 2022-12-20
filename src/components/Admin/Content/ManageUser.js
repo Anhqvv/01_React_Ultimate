@@ -1,10 +1,24 @@
 import ModalCreateUser from './ModalCreateUser'
 import './ManageUser.scss'
 import { FcPlus } from 'react-icons/fc'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import TableUser from './TableUser'
+import { toast } from 'react-toastify'
+import { getAllUsers } from '../../sevices/apiService'
 
 const ManageUser = props => {
   const [showModal, setShowModal] = useState(false)
+  const [listUser, setListUser] = useState([])
+
+  useEffect(() => {
+    fetchAllUser()
+  }, [])
+  const fetchAllUser = async () => {
+    let res = await getAllUsers()
+    if (res.EC === 0) {
+      setListUser(res.DT)
+    }
+  }
 
   return (
     <div className='manage-user-container'>
@@ -16,8 +30,14 @@ const ManageUser = props => {
         >
           <FcPlus /> Add new user
         </button>
-        <div>User tables</div>
-        <ModalCreateUser show={showModal} setShow={setShowModal} />
+        <div className='table-users-container'>
+          <TableUser listUser={listUser} />
+        </div>
+        <ModalCreateUser
+          show={showModal}
+          setShow={setShowModal}
+          fetchAllUser={fetchAllUser}
+        />
       </div>
     </div>
   )
