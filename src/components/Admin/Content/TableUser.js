@@ -1,5 +1,5 @@
 const TableUser = props => {
-  const { listUser } = props
+  const { listUser, handleClickToUpdate } = props
 
   return (
     <>
@@ -25,7 +25,12 @@ const TableUser = props => {
                   <td>{item.role}</td>
                   <td>
                     <button className='btn btn-secondary'>View</button>
-                    <button className='btn btn-info mx-3'>Update</button>
+                    <button
+                      className='btn btn-info mx-3'
+                      onClick={() => handleClickToUpdate(item)}
+                    >
+                      Update
+                    </button>
                     <button className='btn btn-danger'>Delete</button>
                   </td>
                 </tr>

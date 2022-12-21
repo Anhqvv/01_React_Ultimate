@@ -5,8 +5,10 @@ import { useState, useEffect } from 'react'
 import TableUser from './TableUser'
 import { toast } from 'react-toastify'
 import { getAllUsers } from '../../sevices/apiService'
+import ModalUpdateUser from './ModalUpdateUser'
 
 const ManageUser = props => {
+  //CREATE
   const [showModal, setShowModal] = useState(false)
   const [listUser, setListUser] = useState([])
 
@@ -20,6 +22,15 @@ const ManageUser = props => {
     }
   }
 
+  //Update
+  const [showModalUpdateUser, setShowModalUpdateUser] = useState(false)
+  const [dataUpdate, setDataUpdate] = useState([])
+
+  const handleClickToUpdate = user => {
+    setShowModalUpdateUser(true)
+    setDataUpdate(user)
+  }
+
   return (
     <div className='manage-user-container'>
       <div className='title'>ManageUser</div>
@@ -31,12 +42,23 @@ const ManageUser = props => {
           <FcPlus /> Add new user
         </button>
         <div className='table-users-container'>
-          <TableUser listUser={listUser} />
+          <TableUser
+            listUser={listUser}
+            handleClickToUpdate={handleClickToUpdate}
+          />
         </div>
         <ModalCreateUser
           show={showModal}
           setShow={setShowModal}
           fetchAllUser={fetchAllUser}
+        />
+        <ModalUpdateUser
+          show={showModalUpdateUser}
+          setShow={setShowModalUpdateUser}
+          dataUpdate={dataUpdate}
+          fetchAllUser={fetchAllUser}
+          setDataUpdate={setDataUpdate}
+
         />
       </div>
     </div>
