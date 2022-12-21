@@ -34,7 +34,6 @@ const ModalUpdateUser = props => {
   }
   const handleSaveUser = async () => {
     let res = await putUpdateUser(dataUpdate.id, username, role, image)
-    console.log('res', res)
     if (res && res.EC === 0) {
       toast.success(res.EM)
       handleClose()

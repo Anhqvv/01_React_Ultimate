@@ -6,6 +6,7 @@ import TableUser from './TableUser'
 import { toast } from 'react-toastify'
 import { getAllUsers } from '../../sevices/apiService'
 import ModalUpdateUser from './ModalUpdateUser'
+import ModalDeleteUser from './ModalDeleteUser'
 
 const ManageUser = props => {
   //CREATE
@@ -31,6 +32,15 @@ const ManageUser = props => {
     setDataUpdate(user)
   }
 
+  //Delete
+  const [showModalDelete, setShowModalDelete] = useState(false)
+  const [dataDelete, setDataDelete] = useState({})
+
+  const handleClickToDelete = user => {
+    setShowModalDelete(true)
+    setDataDelete(user)
+  }
+
   return (
     <div className='manage-user-container'>
       <div className='title'>ManageUser</div>
@@ -45,6 +55,7 @@ const ManageUser = props => {
           <TableUser
             listUser={listUser}
             handleClickToUpdate={handleClickToUpdate}
+            handleClickToDelete={handleClickToDelete}
           />
         </div>
         <ModalCreateUser
@@ -58,7 +69,12 @@ const ManageUser = props => {
           dataUpdate={dataUpdate}
           fetchAllUser={fetchAllUser}
           setDataUpdate={setDataUpdate}
-
+        />
+        <ModalDeleteUser
+          setShow={setShowModalDelete}
+          show={showModalDelete}
+          dataDelete={dataDelete}
+          fetchAllUser={fetchAllUser}
         />
       </div>
     </div>
