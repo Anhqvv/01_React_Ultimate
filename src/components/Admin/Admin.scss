@@ -9,5 +9,9 @@
   .admin-content {
     padding: 20px;
     width: 100%;
+    .users-pagiante {
+      display: flex;
+      justify-content: center;
+    }
   }
 }
