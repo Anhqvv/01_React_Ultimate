@@ -7,6 +7,7 @@ import { toast } from 'react-toastify'
 import { getAllUsers } from '../../sevices/apiService'
 import ModalUpdateUser from './ModalUpdateUser'
 import ModalDeleteUser from './ModalDeleteUser'
+import ModalViewUser from './ModalViewUser'
 
 const ManageUser = props => {
   //CREATE
@@ -40,6 +41,14 @@ const ManageUser = props => {
     setShowModalDelete(true)
     setDataDelete(user)
   }
+  //View
+  const [showModalView, setShowModalView] = useState(false)
+  const [dataView,setDataView] = useState({})
+
+  const handleClickToView = user => {
+    setShowModalView(true)
+    setDataView(user)
+  }
 
   return (
     <div className='manage-user-container'>
@@ -56,6 +65,7 @@ const ManageUser = props => {
             listUser={listUser}
             handleClickToUpdate={handleClickToUpdate}
             handleClickToDelete={handleClickToDelete}
+            handleClickToView={handleClickToView}
           />
         </div>
         <ModalCreateUser
@@ -75,6 +85,12 @@ const ManageUser = props => {
           show={showModalDelete}
           dataDelete={dataDelete}
           fetchAllUser={fetchAllUser}
+        />
+        <ModalViewUser
+          show={showModalView}
+          setShow={setShowModalView}
+          dataView={dataView}
+          setDataView={setDataView}
         />
       </div>
     </div>
