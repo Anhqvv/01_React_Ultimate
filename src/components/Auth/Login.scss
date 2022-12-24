@@ -1,0 +1,29 @@
+.login-container {
+  .header {
+    padding-top: 15px;
+    text-align: right;
+    margin-right: 20px;
+    .btn-signup {
+      &:hover {
+        background-color: rgba($color: #000, $alpha: 0.05);
+        color: #000;
+      }
+    }
+  }
+  .logo {
+    text-align: center;
+    font-size: 50px;
+    margin: 30px 0;
+  }
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  a {
+    text-decoration: none;
+  }
+  .go-back {
+    cursor: pointer;
+  }
+}

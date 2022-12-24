@@ -11,7 +11,9 @@ const App = () => {
       </div>
       <div className='main-container'>
         <div className='sidenav-container'></div>
-        <div className='app-content'><Outlet/></div>
+        <div className='app-content'>
+          <Outlet />
+        </div>
       </div>
     </div>
   )
