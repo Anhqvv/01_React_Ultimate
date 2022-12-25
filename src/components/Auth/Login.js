@@ -10,7 +10,24 @@ const Login = props => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
+  const validateEmail = email => {
+    return String(email)
+      .toLowerCase()
+      .match(
+        /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      )
+  }
+
   const handleLogin = async () => {
+    const isValidateEmail = validateEmail(email)
+    if (!isValidateEmail) {
+      toast.error('Invalid email')
+      return
+    }
+    if (!password) {
+      toast.error('Inavalid password')
+      return
+    }
     const res = await postLogin(email, password)
     if (res && res.EC === 0) {
       toast.success(res.EM)
@@ -18,6 +35,10 @@ const Login = props => {
     } else {
       toast.error(res.EM)
     }
+  }
+
+  const handleSingup = () => {
+    navigate('/register')
   }
 
   const handleGoHomepage = () => {
@@ -28,7 +49,10 @@ const Login = props => {
     <div className='login-container '>
       <div className='header'>
         <span>Don't have an account yet?</span>
-        <button className='btn btn-outline-dark btn-signup mx-3'>
+        <button
+          className='btn btn-outline-dark btn-signup mx-3'
+          onClick={() => handleSingup()}
+        >
           Sign up
         </button>
       </div>

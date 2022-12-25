@@ -7,6 +7,7 @@ import DashBoard from './components/Admin/Content/DashBoard'
 import ManageUser from './components/Admin/Content/ManageUser'
 import Login from './components/Auth/Login'
 import Toastify from './components/Toastify'
+import Register from './components/Auth/Register'
 const Layout = () => {
   return (
     <>
@@ -20,6 +21,7 @@ const Layout = () => {
           <Route element={<ManageUser />} path='manage-users' />
         </Route>
         <Route element={<Login />} path='/login' />
+        <Route element={<Register />} path='/register' />
       </Routes>
       <Toastify />
     </>

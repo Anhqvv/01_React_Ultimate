@@ -40,15 +40,15 @@ const ModalCreateUser = props => {
   }
   const handleSaveUser = async () => {
     //validate
-    // const isValidateEmail = validateEmail(email)
-    // if (!isValidateEmail) {
-    //   toast.error('Invalid email')
-    //   return
-    // }
-    // if (!password) {
-    //   toast.error('Inavalid password')
-    //   return
-    // }
+    const isValidateEmail = validateEmail(email)
+    if (!isValidateEmail) {
+      toast.error('Invalid email')
+      return
+    }
+    if (!password) {
+      toast.error('Inavalid password')
+      return
+    }
 
     let res = await postCreateNewUser(email, password, username, role, image)
     console.log('API res from modal', res)
