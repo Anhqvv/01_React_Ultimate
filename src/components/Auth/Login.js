@@ -3,9 +3,12 @@ import './Login.scss'
 import { useNavigate } from 'react-router-dom'
 import { postLogin } from '../sevices/apiService'
 import { toast } from 'react-toastify'
+import { useDispatch } from 'react-redux'
+import { DoLogin } from '../../redux/action/UserAction'
 
 const Login = props => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
   //State
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -21,6 +24,7 @@ const Login = props => {
   const handleLogin = async () => {
     const isValidateEmail = validateEmail(email)
     if (!isValidateEmail) {
+
       toast.error('Invalid email')
       return
     }
@@ -30,6 +34,8 @@ const Login = props => {
     }
     const res = await postLogin(email, password)
     if (res && res.EC === 0) {
+
+      dispatch(DoLogin(res))
       toast.success(res.EM)
       navigate('/')
     } else {
