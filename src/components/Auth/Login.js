@@ -5,6 +5,7 @@ import { postLogin } from '../sevices/apiService'
 import { toast } from 'react-toastify'
 import { useDispatch } from 'react-redux'
 import { DoLogin } from '../../redux/action/UserAction'
+import { ImSpinner9 } from 'react-icons/im'
 
 const Login = props => {
   const navigate = useNavigate()
@@ -12,6 +13,7 @@ const Login = props => {
   //State
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const validateEmail = email => {
     return String(email)
@@ -24,7 +26,6 @@ const Login = props => {
   const handleLogin = async () => {
     const isValidateEmail = validateEmail(email)
     if (!isValidateEmail) {
-
       toast.error('Invalid email')
       return
     }
@@ -32,14 +33,16 @@ const Login = props => {
       toast.error('Inavalid password')
       return
     }
+    setIsLoading(true)
     const res = await postLogin(email, password)
     if (res && res.EC === 0) {
-
       dispatch(DoLogin(res))
       toast.success(res.EM)
-      navigate('/')
+      setIsLoading(false)
+      // navigate('/')
     } else {
       toast.error(res.EM)
+      setIsLoading(false)
     }
   }
 
@@ -85,9 +88,14 @@ const Login = props => {
             onChange={e => setPassword(e.target.value)}
           />
         </div>
-        <a href='#'>Forgot password?</a>
-        <button className='btn btn-dark p-2' onClick={() => handleLogin()}>
-          Login To Typeform
+        <a href='#!'>Forgot password?</a>
+        <button
+          className='btn-handle-login'
+          onClick={() => handleLogin()}
+          disabled={isLoading}
+        >
+          { isLoading &&<ImSpinner9 className='loader-icon' />}
+          <span>Login To Typeform</span>
         </button>
         <div className='text-center go-back' onClick={() => handleGoHomepage()}>
           <span>&#60;&#60;Go to Homepage</span>

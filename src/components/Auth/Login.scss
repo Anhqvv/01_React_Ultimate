@@ -1,4 +1,45 @@
 .login-container {
+  .loader-icon {
+    margin-right: 7px;
+    top: 2px;
+    animation: spin 1s infinite linear;
+  }
+  @keyframes spin {
+    from {
+      transform: scale(1) rotate(0deg);
+    }
+    to {
+      transform: scale(1) rotate(360deg);
+    }
+  }
+  .btn-handle-login {
+    outline: none;
+    border-radius: 10px;
+    border: 1px solid #0066cc;
+    background-color: #0099cc;
+    color: #ffffff;
+    padding: 10px 15px;
+
+    &:hover {
+      border: 1px solid #0099cc;
+      background-color: #00aacc;
+      color: #ffffff;
+      cursor: pointer;
+    }
+
+    &:disabled {
+      border: 1px solid #999999;
+      background-color: #cccccc;
+      color: #666666;
+      cursor: no-drop;
+    }
+  }
+  // button:disabled {
+  //   border: 1px solid #999999;
+  //   background-color: #cccccc;
+  //   color: #666666;
+  //   cursor: progress !important;
+  // }
   .header {
     padding-top: 15px;
     text-align: right;
