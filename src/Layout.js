@@ -8,6 +8,7 @@ import ManageUser from './components/Admin/Content/ManageUser'
 import Login from './components/Auth/Login'
 import Toastify from './components/Toastify'
 import Register from './components/Auth/Register'
+
 const Layout = () => {
   return (
     <>
