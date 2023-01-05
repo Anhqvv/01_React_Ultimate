@@ -1,9 +1,11 @@
-import ListQuiz from "./ListQuiz"
+import ListQuiz from './ListQuiz'
 
 const User = () => {
-  return <div>
-    <ListQuiz/>
-  </div>
+  return (
+    <div>
+      <ListQuiz />
+    </div>
+  )
 }
 
 export default User
