@@ -3,12 +3,16 @@ import { getQuizData } from '../sevices/apiService'
 import { useEffect } from 'react'
 import _ from 'lodash'
 import './DetailQuiz.scss'
+import Question from './Question'
+import { useState } from 'react'
 
 const DetailQuiz = () => {
+  const [dataQuiz, setDataQuiz] = useState([])
+  const [index, setIndex] = useState(0)
+
   const params = useParams()
   const location = useLocation()
   const quizTilte = location?.state?.quizTilte
-  console.log('quizTilte:', quizTilte)
   const quizId = params.id
   useEffect(() => {
     fetchQuestions()
@@ -32,29 +36,64 @@ const DetailQuiz = () => {
             }
             answers.push(item.answers)
           })
-          return { questonsId: key, answers, questionDescription, image }
+          return { questionsId: key, answers, questionDescription, image }
         })
         .value()
-      console.log('data groupBy: ', data)
+      setDataQuiz(data)
     }
   }
+
+  const handleBack = () => {
+    if (index - 1 < 0) {
+      return
+    }
+    setIndex(index - 1)
+  }
+  const handleNext = () => {
+    if (index + 1 === dataQuiz.length) {
+      return
+    }
+    setIndex(index + 1)
+  }
+  console.log('>>> Checking index = ', index)
   return (
     <div className='detail-quiz-container'>
       <div className='left-container'>
         <div className='title'>{quizTilte}</div>
         <hr />
-        <img />
         <div className='question-content'>
-          <div className='question'>Question 1: What are you doing?</div>
-          <div className='answer'>
-            <div className='answer-child'>A.Doing homework</div>
-            <div className='answer-child'>B.Doing homework</div>
-            <div className='answer-child'>C.Doing homework</div>
-          </div>
+          <Question
+            dataQuiz={dataQuiz && dataQuiz.length > 0 && dataQuiz[index]}
+            index={index}
+          />
         </div>
         <div className='footer'>
-          <button className='btn btn-secondary'>Back</button>
-          <button className='btn btn-primary'>Next</button>
+          {+index === 0 ? (
+            <button
+              className='btn btn-secondary'
+              onClick={() => handleBack()}
+              disabled
+            >
+              Back
+            </button>
+          ) : (
+            <button className='btn btn-secondary' onClick={() => handleBack()}>
+              Back
+            </button>
+          )}
+          {+index == dataQuiz.length - 1 ? (
+            <button
+              className='btn btn-primary'
+              onClick={() => handleNext()}
+              disabled
+            >
+              Next
+            </button>
+          ) : (
+            <button className='btn btn-primary' onClick={() => handleNext()}>
+              Next
+            </button>
+          )}
         </div>
       </div>
       <div className='right-container'>right-container</div>
