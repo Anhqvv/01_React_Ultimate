@@ -1,12 +1,17 @@
 const Question = props => {
-  const { dataQuiz, index } = props
-
+  const { dataQuiz, index, handleCheckboxFather } = props
+  //Checkbox
+  const handleCheckbox = (e, answerId, questionId) => {
+    handleCheckboxFather(answerId, questionId)
+  }
   return (
     <>
-      {dataQuiz.image && (
+      {dataQuiz.image ? (
         <div className='image'>
           <img src={`data:image/png;base64,${dataQuiz.image}`} />
         </div>
+      ) : (
+        <div className='image'></div>
       )}
 
       <div className='question'>
@@ -23,13 +28,12 @@ const Question = props => {
                     <input
                       className='form-check-input'
                       type='checkbox'
-                      defaultValue=''
-                      id='flexCheckDefault'
+                      checked={ answer.isSelected}
+                      onChange={e =>
+                        handleCheckbox(e, answer.id, dataQuiz.questionsId)
+                      }
                     />
-                    <label
-                      className='form-check-label'
-                      htmlFor='flexCheckDefault'
-                    >
+                    <label className='form-check-label'>
                       {answer.description}
                     </label>
                   </div>

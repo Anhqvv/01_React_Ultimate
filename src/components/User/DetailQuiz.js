@@ -17,7 +17,6 @@ const DetailQuiz = () => {
   useEffect(() => {
     fetchQuestions()
   }, [quizId])
-
   const fetchQuestions = async () => {
     const res = await getQuizData(quizId)
     // console.log('>>> getQuizData res', res.DT)
@@ -34,6 +33,7 @@ const DetailQuiz = () => {
               questionDescription = item.description
               image = item.image
             }
+            item.answers.isSelected = false
             answers.push(item.answers)
           })
           return { questionsId: key, answers, questionDescription, image }
@@ -55,7 +55,30 @@ const DetailQuiz = () => {
     }
     setIndex(index + 1)
   }
-  console.log('>>> Checking index = ', index)
+  //Checkbox
+  const handleCheckboxFather = (answerId, questionId) => {
+    let dataQuizClone = _.cloneDeep(dataQuiz)
+
+    let question = dataQuizClone.find(item => +item.questionsId === +questionId)
+    if (question && question.answers) {
+      let answer = question.answers.map(item => {
+        if (+item.id === +answerId) {
+          item.isSelected = !item.isSelected
+        }
+        return item
+      })
+      question.answers = answer
+    }
+
+    let currIndex = dataQuizClone.findIndex(
+      item => +item.questionsId === +questionId
+    )
+    if (currIndex > -1) {
+      dataQuizClone[currIndex] = question
+      setDataQuiz(dataQuizClone)
+    }
+  }
+  console.log('dataQuiz fffffff', dataQuiz)
   return (
     <div className='detail-quiz-container'>
       <div className='left-container'>
@@ -65,6 +88,7 @@ const DetailQuiz = () => {
           <Question
             dataQuiz={dataQuiz && dataQuiz.length > 0 && dataQuiz[index]}
             index={index}
+            handleCheckboxFather={handleCheckboxFather}
           />
         </div>
         <div className='footer'>
