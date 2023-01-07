@@ -78,7 +78,31 @@ const DetailQuiz = () => {
       setDataQuiz(dataQuizClone)
     }
   }
-  console.log('dataQuiz fffffff', dataQuiz)
+  const handleFinish = () => {
+    let payload = {
+      quizId: quizId,
+      answers: []
+    }
+    let answers = []
+    if (dataQuiz && dataQuiz.length > 0) {
+      dataQuiz.forEach(question => {
+        let questionId = question.questionsId
+        let userAnswerId = []
+        question.answers.forEach(answer => {
+          if (answer.isSelected === true) {
+            userAnswerId.push(answer.id)
+          }
+        })
+        answers.push({
+          questionId: questionId,
+          userAnswerId: userAnswerId
+        })
+      })
+    }
+    payload.answers = answers
+    console.log('paylload data; ', payload.answers)
+    console.log('dataQuiz fffffff', dataQuiz)
+  }
   return (
     <div className='detail-quiz-container'>
       <div className='left-container'>
@@ -105,7 +129,7 @@ const DetailQuiz = () => {
               Back
             </button>
           )}
-          {+index == dataQuiz.length - 1 ? (
+          {+index === dataQuiz.length - 1 ? (
             <button
               className='btn btn-primary'
               onClick={() => handleNext()}
@@ -118,6 +142,9 @@ const DetailQuiz = () => {
               Next
             </button>
           )}
+          <button className='btn btn-warning' onClick={() => handleFinish()}>
+            Finish
+          </button>
         </div>
       </div>
       <div className='right-container'>right-container</div>
