@@ -1,12 +1,17 @@
 import { useParams, useLocation } from 'react-router-dom'
-import { getQuizData } from '../sevices/apiService'
+import { getQuizData, postSubmitQuiz } from '../sevices/apiService'
 import { useEffect } from 'react'
 import _ from 'lodash'
 import './DetailQuiz.scss'
 import Question from './Question'
 import { useState } from 'react'
+import ModalResult from './ModalResult'
 
 const DetailQuiz = () => {
+  //show Modal
+  const [isShowModalResult, setIsShowModalResult] = useState(false)
+  const [dataResult, setDataResult] = useState({})
+  //
   const [dataQuiz, setDataQuiz] = useState([])
   const [index, setIndex] = useState(0)
 
@@ -19,7 +24,6 @@ const DetailQuiz = () => {
   }, [quizId])
   const fetchQuestions = async () => {
     const res = await getQuizData(quizId)
-    // console.log('>>> getQuizData res', res.DT)
     if (res && res.EC === 0) {
       let raw = res.DT
       let questionDescription,
@@ -78,15 +82,15 @@ const DetailQuiz = () => {
       setDataQuiz(dataQuizClone)
     }
   }
-  const handleFinish = () => {
+  const handleFinish = async () => {
     let payload = {
-      quizId: quizId,
+      quizId: +quizId,
       answers: []
     }
     let answers = []
     if (dataQuiz && dataQuiz.length > 0) {
       dataQuiz.forEach(question => {
-        let questionId = question.questionsId
+        let questionId = +question.questionsId
         let userAnswerId = []
         question.answers.forEach(answer => {
           if (answer.isSelected === true) {
@@ -98,10 +102,22 @@ const DetailQuiz = () => {
           userAnswerId: userAnswerId
         })
       })
+      payload.answers = answers
+      //Submit api
+      console.log('payload to submit', payload)
+      let res = await postSubmitQuiz(payload)
+      if (res && res.EC === 0) {
+        setIsShowModalResult(true)
+        setDataResult({
+          countCorrect: res.DT.countCorrect,
+          countTotal: res.DT.countTotal,
+          quizData: res.DT.quizData
+
+        })
+      } else {
+        alert('data Wrong')
+      }
     }
-    payload.answers = answers
-    console.log('paylload data; ', payload.answers)
-    console.log('dataQuiz fffffff', dataQuiz)
   }
   return (
     <div className='detail-quiz-container'>
@@ -148,6 +164,11 @@ const DetailQuiz = () => {
         </div>
       </div>
       <div className='right-container'>right-container</div>
+      <ModalResult
+        show={isShowModalResult}
+        setShow={setIsShowModalResult}
+        dataResult={dataResult}
+      />
     </div>
   )
 }
