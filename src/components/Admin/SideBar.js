@@ -14,9 +14,12 @@ import { MdDashboard } from 'react-icons/md'
 import sidebarBg from '../../assets/bg2.jpg'
 import './SideBar.scss'
 import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const SideBar = props => {
   const { image, collapsed, toggled, handleToggleSidebar } = props
+
+  const navigate = useNavigate()
   return (
     <>
       <ProSidebar
@@ -39,7 +42,12 @@ const SideBar = props => {
               whiteSpace: 'nowrap'
             }}
           >
-            <FaReact size='3em' color='00bfff' /> React - IT
+            <FaReact size='3em' color='00bfff' />
+            <span onClick={ () => navigate('/')}>
+
+            React - IT
+            </span>
+            
           </div>
         </SidebarHeader>
 
@@ -59,7 +67,10 @@ const SideBar = props => {
                 Quản lý Users
                 <Link to='/admins/manage-users' />
               </MenuItem>
-              <MenuItem> Quản lý Bài Quiz</MenuItem>
+              <MenuItem>
+                Quản lý Bài Quiz
+                <Link to='/admins/manage-quizzes' />
+              </MenuItem>
               <MenuItem> Quản lý Câu Hỏi</MenuItem>
             </SubMenu>
           </Menu>

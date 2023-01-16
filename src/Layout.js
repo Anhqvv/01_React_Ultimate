@@ -10,6 +10,7 @@ import Toastify from './components/Toastify'
 import Register from './components/Auth/Register'
 import DetailQuiz from './components/User/DetailQuiz'
 import NotFound from './components/User/NotFound'
+import ManageQuiz from './components/Admin/Content/Quiz/ManageQuiz'
 const Layout = () => {
   return (
     <>
@@ -23,6 +24,7 @@ const Layout = () => {
         <Route element={<Admin />} path='/admins'>
           <Route element={<DashBoard />} index />
           <Route element={<ManageUser />} path='manage-users' />
+          <Route element={<ManageQuiz />} path='manage-quizzes' />
         </Route>
         <Route element={<Login />} path='/login' />
         <Route element={<Register />} path='/register' />
